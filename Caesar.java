@@ -22,7 +22,7 @@ public class Caesar {
         return result;
         //To change body of generated methods, choose Tools | Templates.
     }
-    public char encryptLetter(char c, int k) {
+    private char encryptLetter(char c, int k) {
         if (!Character.isLetter(c)) return c;
         return (char)((((Character.toUpperCase(c) - 'A') + k) % 26 + 26) % 26 + 'A');
         //To change body of generated methods, choose Tools | Templates.

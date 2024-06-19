@@ -30,7 +30,7 @@ public class RSA
     }
 
 
-    public void generatePrimeNumbers()
+    private void generatePrimeNumbers()
     {
         Random random = new Random();
         p = BigInteger.probablePrime(primeSize /2, random);
@@ -41,7 +41,7 @@ public class RSA
         while( q.compareTo( p ) == 0 ) ;
     }
 
-    public void generatePublicPrivateKeys()
+    private void generatePublicPrivateKeys()
     {
         // N = p * q
         N = p.multiply( q ) ;
@@ -69,7 +69,7 @@ public class RSA
         return decrypt(convertStringToBigIntArray(cipher), getD(), getN());
     }
 
-    public String convertBigIntArrayToString(BigInteger[] bigIntArray) {
+    private String convertBigIntArrayToString(BigInteger[] bigIntArray) {
         // Use StringBuilder for efficient concatenation
         StringBuilder sb = new StringBuilder();
 
@@ -87,7 +87,7 @@ public class RSA
 
         return sb.toString();
     }
-    public BigInteger[] convertStringToBigIntArray(String bigIntString) {
+    private BigInteger[] convertStringToBigIntArray(String bigIntString) {
         // Split the string by the delimiter (comma in this case)
         String[] stringParts = bigIntString.split(",");
 
@@ -101,7 +101,7 @@ public class RSA
 
         return bigIntArray;
     }
-    public BigInteger[] encrypt( String message )
+    private BigInteger[] encrypt( String message )
     {
         int i ;
         byte[] temp = new byte[1] ;
@@ -117,7 +117,7 @@ public class RSA
             encrypted[i] = bigdigits[i].modPow( E, N ) ;
         return( encrypted ) ;
     }
-    public BigInteger[] encrypt( String message,BigInteger userD,BigInteger userN)
+    private BigInteger[] encrypt( String message,BigInteger userD,BigInteger userN)
     {
         int i ;
         byte[] temp = new byte[1] ;
@@ -134,7 +134,7 @@ public class RSA
         return( encrypted ) ;
     }
 
-    public String decrypt( BigInteger[] encrypted,BigInteger D,BigInteger N )
+    private String decrypt( BigInteger[] encrypted,BigInteger D,BigInteger N )
     {
         int i ;
         BigInteger[] decrypted = new BigInteger[encrypted.length] ;
@@ -146,32 +146,32 @@ public class RSA
         return( new String( charArray ) ) ;
     }
 
-    public BigInteger getp()
+    private BigInteger getp()
     {
         return( p ) ;
     }
 
-    public BigInteger getq()
+    private BigInteger getq()
     {
         return( q ) ;
     }
 
-    public BigInteger getr()
+    private BigInteger getr()
     {
         return( r ) ;
     }
 
-    public BigInteger getN()
+    private BigInteger getN()
     {
         return( N ) ;
     }
 
-    public BigInteger getE()
+    private BigInteger getE()
     {
         return( E ) ;
     }
 
-    public BigInteger getD()
+    private BigInteger getD()
     {
         return( D ) ;
     }

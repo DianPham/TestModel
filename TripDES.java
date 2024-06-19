@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 
 public class TripDES {
     private static final String UNICODE_FORMAT = "UTF8";
-    public static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
+    private static final String DESEDE_ENCRYPTION_SCHEME = "DESede";
     private KeySpec myKeySpec;
     private SecretKeyFactory mySecretKeyFactory;
     private Cipher inCipher;
@@ -53,7 +53,7 @@ public class TripDES {
         return null;
     }
 
-    public String decrypt(String encryptedString) {
+    private String decrypt(String encryptedString) {
         String decryptedText = null;
         try {
             inCipher.init(Cipher.DECRYPT_MODE, secretKey);
@@ -65,7 +65,7 @@ public class TripDES {
         }
         return decryptedText;
     }
-    public String encrypt(String unencryptedString) {
+    private String encrypt(String unencryptedString) {
         String encryptedString = null;
         try {
             inCipher.init(Cipher.ENCRYPT_MODE, secretKey);

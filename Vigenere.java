@@ -19,7 +19,7 @@ public class Vigenere {
         return en_de_crypt(cipher, newKey);
     }
 
-    public String en_de_crypt(String text, String key) {
+    private String en_de_crypt(String text, String key) {
         int n = text.length();
         String result = "";
         int k = 0;
@@ -35,7 +35,7 @@ public class Vigenere {
         return result;
     }
 
-    public String reviseKey(String key1) {
+    private String reviseKey(String key1) {
         String key2 = "";
         int kn = key1.length();
         for (int i = 0; i < kn; i++)
@@ -43,7 +43,7 @@ public class Vigenere {
         return key2;
     }
 
-    public char encryptLetter(char c, int k) {
+    private char encryptLetter(char c, int k) {
         int xn = Character.toUpperCase(c) - 'A';
         int kn = Character.toUpperCase(k) - 'A';
         int yn = vig[kn][xn];
