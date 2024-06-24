@@ -51,4 +51,9 @@ public class StringAction {
         }
     }
 
+    public boolean compareString (String string1, String string2)
+    {
+        return string1.equals(string2);
+    }
+
 }
