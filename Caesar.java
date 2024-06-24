@@ -30,7 +30,7 @@ public class Caesar {
 
     public static void main(String[] args) {
         Caesar caesar = new Caesar();
-        String cipher = caesar.performEncryption("hoangdan", "21");
+        String cipher = caesar.performEncryption("hoangdan,hoangdan", "21");
         String plain = caesar.performDecryption(cipher, "21");
         System.out.println(cipher);
         System.out.println(plain);

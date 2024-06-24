@@ -33,7 +33,7 @@ public class SHA {
     public static void main(String[] args)
     {
         SHA sha = new SHA();
-        String cipher = sha.performEncryption("phamdoanhoangdanhoangdan123");
+        String cipher = sha.performEncryption("phamdoanhoangdan,hoangdan123");
         System.out.println("Cipher: " + cipher);
     }
 }

@@ -74,7 +74,7 @@ public class DES {
 
     public static void main(String[] args) {
         DES des = new DES();
-        String cipher = des.performEncryption("I LOVE YOU MORE THAN I CAN SAY", "baomatthongtin");
+        String cipher = des.performEncryption("I LOVE YOU MORE THAN I CAN SAY, hoangdan", "baomatthongtin");
         String plain = des.performDecryption("baomatthongtin");
         System.out.println(cipher);
         System.out.println(plain);

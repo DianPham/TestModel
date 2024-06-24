@@ -80,7 +80,7 @@ public class TripDES {
 
     public static void main(String[] args) {
         TripDES td = new TripDES();
-        String cipher = td.performEncryption("mon thuc hanh bao mat thong tin", "baomatthongtinbuivanthieu");
+        String cipher = td.performEncryption("mon thuc hanh bao, mat thong tin", "baomatthongtinbuivanthieu");
         String plain = td.performDecryption(cipher, "baomatthongtinbuivanthieu");
         System.out.println(cipher);
         System.out.println(plain);

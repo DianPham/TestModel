@@ -29,7 +29,7 @@ public class MD5 {
     public static void main(String[] args)
     {
         MD5 md5 = new MD5();
-        String cipher = md5.performEncryption("phamdoanhoangdanhoangdan123");
+        String cipher = md5.performEncryption("phamdoanhoangdanhoangdan123,hoangdan");
         System.out.println("Cipher: " + cipher);
     }
 }

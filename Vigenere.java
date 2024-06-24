@@ -30,8 +30,7 @@ public class Vigenere {
                 k++;
                 k = k % key.length();
             }
-            else
-                result += text.charAt(i);
+            else result += text.charAt(i);
         return result;
     }
 
@@ -53,7 +52,7 @@ public class Vigenere {
 
     public static void main(String[] args) {
         Vigenere vig = new Vigenere();
-        String cipher = vig.performEncryption("hoangdan", "hutech");
+        String cipher = vig.performEncryption("hoang,dan", "hutech");
         String plain = vig.performDecryption(cipher, "hutech");
         System.out.println(cipher);
         System.out.println(plain);

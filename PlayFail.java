@@ -7,81 +7,86 @@ public class PlayFail {
             {'U','V','W','X','Z'}
     };
 
-    public String performEncryption(String plaintext)
-    {
+    public String performEncryption(String plaintext) {
         String text = plaintext.toUpperCase().replace('J', 'I');
         return encrypt(text);
     }
 
-    public String performDecryption(String cipher)
-    {
+    public String performDecryption(String cipher) {
         return decrypt(cipher);
     }
 
     private String encrypt(String plaintext) {
         int n = plaintext.length();
-        String cipher = "";
+        StringBuilder cipher = new StringBuilder();
         char a, b;
         for (int i = 0; i < n; i += 2) {
-            if (Character.isLetter(plaintext.charAt(i)))
-            {
+            if (Character.isLetter(plaintext.charAt(i))) {
                 a = plaintext.charAt(i);
-                b = (i + 1 < n) ? plaintext.charAt(i + 1) : 'X';
+                b = (i + 1 < n && Character.isLetter(plaintext.charAt(i + 1))) ? plaintext.charAt(i + 1) : 'X';
                 if (a == b) {
                     b = 'X';
+                    i--; // Stay on the current character for the next pair
                 }
-                cipher += replace(a, b);
-            }
-            else
-            {
-                cipher += plaintext.charAt(i);
+                cipher.append(replace(a, b));
+            } else {
+                cipher.append(plaintext.charAt(i));
+                i--; // Stay on the current character for the next pair
             }
         }
-        return cipher;
+        return cipher.toString();
     }
+
     private String decrypt(String message) {
         StringBuilder decodedMessage = new StringBuilder();
-
-        // Process the message in digraphs
-        for (int i = 0; i < message.length(); i += 2) {
-            char a = message.charAt(i);
-            char b = message.charAt(i + 1);
-            int[] aPos = getCharPos(a);
-            int[] bPos = getCharPos(b);
-
-            if (aPos[0] == bPos[0]) {
-                // Same row
-                decodedMessage.append(pf[aPos[0]][(aPos[1] + 4) % 5]);
-                decodedMessage.append(pf[bPos[0]][(bPos[1] + 4) % 5]);
-            } else if (aPos[1] == bPos[1]) {
-                // Same column
-                decodedMessage.append(pf[(aPos[0] + 4) % 5][aPos[1]]);
-                decodedMessage.append(pf[(bPos[0] + 4) % 5][bPos[1]]);
+        int n = message.length();
+        for (int i = 0; i < n; i += 2) {
+            if (Character.isLetter(message.charAt(i))) {
+                char a = message.charAt(i);
+                char b = (i + 1 < n && Character.isLetter(message.charAt(i + 1))) ? message.charAt(i + 1) : 'X';
+                decodedMessage.append(replaceDecode(a, b));
             } else {
-                // Rectangle swap
-                decodedMessage.append(pf[aPos[0]][bPos[1]]);
-                decodedMessage.append(pf[bPos[0]][aPos[1]]);
+                decodedMessage.append(message.charAt(i));
+                i--; // Stay on the current character for the next pair
             }
         }
-
         return decodedMessage.toString();
     }
+
     private String replace(char a, char b) {
         String vta = locate(a);
         String vtb = locate(b);
         char x, y;
-        if (vta.charAt(1) == vtb.charAt(1)) { // Cùng cột
+        if (vta.charAt(1) == vtb.charAt(1)) { // Same column
             x = pf[(vta.charAt(0) - '0' + 1) % 5][vta.charAt(1) - '0'];
             y = pf[(vtb.charAt(0) - '0' + 1) % 5][vtb.charAt(1) - '0'];
-        } else if (vta.charAt(0) == vtb.charAt(0)) { // Cùng hàng
+        } else if (vta.charAt(0) == vtb.charAt(0)) { // Same row
             x = pf[vta.charAt(0) - '0'][(vta.charAt(1) - '0' + 1) % 5];
             y = pf[vtb.charAt(0) - '0'][(vtb.charAt(1) - '0' + 1) % 5];
-        } else { // Không cùng hàng hoặc cột
+        } else { // Rectangle swap
             x = pf[vta.charAt(0) - '0'][vtb.charAt(1) - '0'];
             y = pf[vtb.charAt(0) - '0'][vta.charAt(1) - '0'];
         }
         return x + "" + y;
     }
+
+    private String replaceDecode(char a, char b) {
+        String vta = locate(a);
+        String vtb = locate(b);
+        char x, y;
+        if (vta.charAt(1) == vtb.charAt(1)) { // Same column
+            x = pf[(vta.charAt(0) - '0' + 4) % 5][vta.charAt(1) - '0'];
+            y = pf[(vtb.charAt(0) - '0' + 4) % 5][vtb.charAt(1) - '0'];
+        } else if (vta.charAt(0) == vtb.charAt(0)) { // Same row
+            x = pf[vta.charAt(0) - '0'][(vta.charAt(1) - '0' + 4) % 5];
+            y = pf[vtb.charAt(0) - '0'][(vtb.charAt(1) - '0' + 4) % 5];
+        } else { // Rectangle swap
+            x = pf[vta.charAt(0) - '0'][vtb.charAt(1) - '0'];
+            y = pf[vtb.charAt(0) - '0'][vta.charAt(1) - '0'];
+        }
+        return x + "" + y;
+    }
+
     private String locate(char a) {
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
@@ -90,8 +95,9 @@ public class PlayFail {
                 }
             }
         }
-        return ""; // Nếu ký tự không tồn tại trong ma trận
+        return ""; // If the character does not exist in the matrix
     }
+
     private int[] getCharPos(char c) {
         for (int row = 0; row < 5; row++) {
             for (int col = 0; col < 5; col++) {
@@ -103,12 +109,11 @@ public class PlayFail {
         return null;
     }
 
-
     public static void main(String[] args) {
         PlayFail pf = new PlayFail();
-        String cipher = pf.performEncryption("hoangdan");
+        String cipher = pf.performEncryption("hoangdan,hoangdanpham");
         String plain = pf.performDecryption(cipher);
-        System.out.println(cipher);
-        System.out.println(plain);
+        System.out.println("Cipher Text: " + cipher);
+        System.out.println("Plain Text: " + plain);
     }
 }

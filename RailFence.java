@@ -1,7 +1,5 @@
-public class RailFence
-{
-    public String performEncryption(String plaintext, String key)
-    {
+public class RailFence {
+    public String performEncryption(String plaintext, String key) {
         int k = Integer.valueOf(key);
         int n = plaintext.length();
         int sd = k;
@@ -16,20 +14,18 @@ public class RailFence
                 c++;
             }
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < sd; i++) {
             for (int j = 0; j < sc; j++) {
                 if (hr[i][j] != 0) {
-                    result += hr[i][j];
+                    result.append(hr[i][j]);
                 }
             }
         }
-
-        return result;
+        return result.toString();
     }
 
-    public String performDecryption(String cipher, String key)
-    {
+    public String performDecryption(String cipher, String key) {
         int k = Integer.valueOf(key);
         int n = cipher.length();
         int sd = k;
@@ -43,25 +39,24 @@ public class RailFence
                 }
             }
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int c = 0, d = 0;
         for (int i = 0; i < n; i++) {
-            result += hr[d][c];
+            result.append(hr[d][c]);
             d++;
             if (d == k) {
                 d = 0;
                 c++;
             }
         }
-        return result;
-
+        return result.toString();
     }
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         RailFence rf = new RailFence();
-        String cipher = rf.performEncryption("hoangdan", "3");
+        String cipher = rf.performEncryption("hoang,dan", "3");
         String plain = rf.performDecryption(cipher, "3");
-        System.out.println(cipher);
-        System.out.println(plain);
+        System.out.println("Encrypted: " + cipher);
+        System.out.println("Decrypted: " + plain);
     }
 }
